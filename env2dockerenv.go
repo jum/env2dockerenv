@@ -56,7 +56,11 @@ func main() {
 	}
 	var env_vars []kv
 	for scanner.Scan() {
-		before, after, found := strings.Cut(scanner.Text(), "=")
+		line := scanner.Text()
+		if line[0] == '#' {
+			continue
+		}
+		before, after, found := strings.Cut(line, "=")
 		if found {
 			after = strings.Trim(after, "\"'")
 			exp, v, found := strings.Cut(before, " ")
